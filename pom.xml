@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>fr.manuel.hibernate</groupId>
+  <groupId>fr.manuelpayet</groupId>
   <artifactId>change.name</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
@@ -35,7 +35,7 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
           </executableDependency>
-          <mainClass>org.hibernate.tutorial.EventManager</mainClass>
+          <mainClass>fr.manuelpayet.App</mainClass>
         </configuration>
       </plugin>
 
