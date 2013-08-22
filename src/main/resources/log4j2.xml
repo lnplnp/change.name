@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration name="changename" packages="fr.manuelpayet, org.hibernate"
+  monitorInterval="30">
+  <appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout
+        pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+    </Console>
+
+    <RollingFile name="changenameRollingFile" fileName="./logs/changename.log"
+      filePattern="logs/$${date:yyyy-MM}/app-%d{yyyy-MM-dd-HH}-%i.changename.log">
+      <PatternLayout>
+        <pattern>%d %p %c [%t] %m%n</pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy interval="6"
+          modulate="true" />
+        <SizeBasedTriggeringPolicy size="250 MB" />
+      </Policies>
+    </RollingFile>
+
+  </appenders>
+
+  <loggers>
+    <root level="debug">
+      <appender-ref ref="Console" />
+    </root>
+    <logger name="changename" level="debug">
+      <appender-ref ref="changenameRollingFile" />
+    </logger>
+  </loggers>
+
+</configuration>
