@@ -1,7 +1,9 @@
 package fr.manuelpayet;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Connection;
@@ -11,16 +13,10 @@ import java.sql.Statement;
 import java.util.Iterator;
 
 import org.codehaus.plexus.util.IOUtil;
-import org.hibernate.Session;
-import org.hibernate.util.HibernateUtil;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import fr.manuelpayet.jsonobject.Person;
-import fr.manuelpayet.name.FirstName;
 
 /**
  * Hello world!
@@ -30,16 +26,16 @@ public class App {
 
   private static Logger log = LoggerFactory.getLogger(App.class);
 
-  private Long createAndStoreFirstName(String label) {
-    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-    session.beginTransaction();
-
-    FirstName firstName = new FirstName(label);
-    session.save(firstName);
-
-    session.getTransaction().commit();
-    return firstName.getId();
-  }
+  // private Long createAndStoreFirstName(String label) {
+  // Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+  // session.beginTransaction();
+  //
+  // FirstName firstName = new FirstName(label);
+  // session.save(firstName);
+  //
+  // session.getTransaction().commit();
+  // return firstName.getId();
+  // }
 
   // private List<?> listEvents() {
   // Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -52,6 +48,7 @@ public class App {
 
   public static void main(String[] args) {
 
+    log.info("Appel direct à la base de données");
     // Create a variable for the connection string.
     String connectionUrl = "jdbc:sqlserver://localhost:1433;" + "databaseName=CeritekQM;user=sa;password=ceritek93";
 
@@ -76,51 +73,100 @@ public class App {
         log.debug("");
       }
 
-      log.info("Essaie via Hibernate");
-      App app = new App();
-      app.createAndStoreFirstName("");
-
-      ObjectMapper mapper = new ObjectMapper();
-      URL url = new URL("http://randomuser.me/g/");
-      URLConnection openConnection = url.openConnection();
-      InputStream inputStream = openConnection.getInputStream();
-
-      StringWriter writer = new StringWriter();
-      IOUtil.copy(inputStream, writer);
-      String string = writer.toString();
-      log.info(string);
-
-      // Person person = mapper.readValue(string, Person.class);
-
-      JSONObject jsonObject = new JSONObject(inputStream);
-      Iterator<?> keys = jsonObject.keys();
-      while (keys.hasNext()) {
-        String s = (String) keys.next();
-        log.info("key : '{}'", s);
-      }
-      // log.info("person.getClass() : '{}'", person.getClass());
-      // log.info("First Name : '{}'", person.getUser().getName().getFirst());
-
     }
     // Handle any errors that may have occurred.
     catch (Exception e) {
       e.printStackTrace();
+      log.warn(e.getMessage());
     } finally {
       if (rs != null)
         try {
+          log.info("Try closing resultset...");
           rs.close();
+          log.info("ResultSet closed.");
         } catch (Exception e) {
+          log.warn(e.getMessage());
         }
       if (stmt != null)
         try {
+          log.info("Try closing statement...");
           stmt.close();
+          log.info("Statement closed.");
         } catch (Exception e) {
+          log.warn(e.getMessage());
         }
       if (con != null)
         try {
+          log.info("Try closing connection...");
           con.close();
+          log.info("Connection closed.");
         } catch (Exception e) {
+          log.warn(e.getMessage());
         }
+    }
+
+    URL url = null;
+    try {
+      url = new URL("http://randomuser.me/g/");
+    } catch (MalformedURLException e) {
+      e.printStackTrace();
+      log.warn(e.getMessage());
+    }
+    URLConnection openConnection = null;
+    try {
+      openConnection = url.openConnection();
+    } catch (IOException e) {
+      e.printStackTrace();
+      log.warn(e.getMessage());
+    }
+    InputStream inputStream = null;
+    try {
+      inputStream = openConnection.getInputStream();
+    } catch (IOException e) {
+      e.printStackTrace();
+      log.warn(e.getMessage());
+    }
+
+    StringWriter writer = new StringWriter();
+    try {
+      IOUtil.copy(inputStream, writer);
+    } catch (IOException e) {
+      e.printStackTrace();
+      log.warn(e.getMessage());
+    }
+    String jsonString = writer.toString();
+    log.info(jsonString);
+
+    log.info("Utilisation de la librairie org.json");
+    orgJson(jsonString);
+
+    // log.info("Essaie via Hibernate");
+    // App app = new App();
+    // app.createAndStoreFirstName("");
+
+  }
+
+  private static void orgJson(String string) {
+    log.info("string '{}'", string);
+    JSONObject jsonObject = null;
+    try {
+      jsonObject = new JSONObject(string);
+    } catch (JSONException e) {
+      e.printStackTrace();
+      log.warn(e.getMessage());
+    }
+    Iterator<?> keys = jsonObject.keys();
+    while (keys.hasNext()) {
+      String s = (String) keys.next();
+      log.info("key : '{}'", s);
+      try {
+        JSONObject jsonObject2 = jsonObject.getJSONObject(s);
+        log.info("jsonObject2 '{}'", jsonObject2);
+        orgJson(jsonObject2.toString());
+      } catch (JSONException e) {
+        e.printStackTrace();
+        log.warn(e.getMessage());
+      }
     }
   }
 }
