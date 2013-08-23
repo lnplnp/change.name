@@ -1,5 +1,6 @@
 package fr.manuelpayet;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -11,12 +12,17 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.codehaus.plexus.util.IOUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Hello world!
@@ -46,6 +52,7 @@ public class App {
   // return result;
   // }
 
+  @SuppressWarnings("unchecked")
   public static void main(String[] args) {
 
     log.info("Appel direct à la base de données");
@@ -69,15 +76,14 @@ public class App {
 
       // Iterate through the data in the result set and display it.
       while (rs.next()) {
-        System.out.println(rs.getString("id") + " " + rs.getString("loginname"));
-        log.debug("");
+        log.debug("{} {}", rs.getString("id"), rs.getString("loginname"));
       }
 
     }
     // Handle any errors that may have occurred.
     catch (Exception e) {
       e.printStackTrace();
-      log.warn(e.getMessage());
+      log.error(e.getMessage());
     } finally {
       if (rs != null)
         try {
@@ -85,7 +91,7 @@ public class App {
           rs.close();
           log.info("ResultSet closed.");
         } catch (Exception e) {
-          log.warn(e.getMessage());
+          log.error(e.getMessage());
         }
       if (stmt != null)
         try {
@@ -93,7 +99,7 @@ public class App {
           stmt.close();
           log.info("Statement closed.");
         } catch (Exception e) {
-          log.warn(e.getMessage());
+          log.error(e.getMessage());
         }
       if (con != null)
         try {
@@ -101,7 +107,7 @@ public class App {
           con.close();
           log.info("Connection closed.");
         } catch (Exception e) {
-          log.warn(e.getMessage());
+          log.error(e.getMessage());
         }
     }
 
@@ -110,21 +116,21 @@ public class App {
       url = new URL("http://randomuser.me/g/");
     } catch (MalformedURLException e) {
       e.printStackTrace();
-      log.warn(e.getMessage());
+      log.error(e.getMessage());
     }
     URLConnection openConnection = null;
     try {
       openConnection = url.openConnection();
     } catch (IOException e) {
       e.printStackTrace();
-      log.warn(e.getMessage());
+      log.error(e.getMessage());
     }
     InputStream inputStream = null;
     try {
       inputStream = openConnection.getInputStream();
     } catch (IOException e) {
       e.printStackTrace();
-      log.warn(e.getMessage());
+      log.error(e.getMessage());
     }
 
     StringWriter writer = new StringWriter();
@@ -132,7 +138,7 @@ public class App {
       IOUtil.copy(inputStream, writer);
     } catch (IOException e) {
       e.printStackTrace();
-      log.warn(e.getMessage());
+      log.error(e.getMessage());
     }
     String jsonString = writer.toString();
     log.info(jsonString);
@@ -140,10 +146,58 @@ public class App {
     log.info("Utilisation de la librairie org.json");
     orgJson(jsonString);
 
+    log.info("Utilisation de la librairie com.fasterxml.jackson.core");
+    log.info(" - avec un inputStream");
+
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, Object> userDataInputStream = null;
+    try {
+      userDataInputStream = mapper.readValue(inputStream, Map.class);
+    } catch (JsonParseException e) {
+      e.printStackTrace();
+      log.error(e.getMessage());
+    } catch (JsonMappingException e) {
+      e.printStackTrace();
+      log.error(e.getMessage());
+    } catch (IOException e) {
+      e.printStackTrace();
+      log.error(e.getMessage());
+    } finally {
+      if (null != userDataInputStream) {
+        comFasterxmlJackson(userDataInputStream);
+      }
+    }
+
+    log.info(" - avec un file");
+    File file = new File("src/main/resources/randomuser.json");
+    Map<String, Object> userDataFile = null;
+    try {
+      userDataFile = mapper.readValue(file, Map.class);
+    } catch (JsonParseException e) {
+      e.printStackTrace();
+      log.error(e.getMessage());
+    } catch (JsonMappingException e) {
+      e.printStackTrace();
+      log.error(e.getMessage());
+    } catch (IOException e) {
+      e.printStackTrace();
+      log.error(e.getMessage());
+    } finally {
+      if (null != userDataFile) {
+        comFasterxmlJackson(userDataFile);
+      }
+    }
+
     // log.info("Essaie via Hibernate");
     // App app = new App();
     // app.createAndStoreFirstName("");
 
+  }
+
+  private static void comFasterxmlJackson(Map<String, Object> userData) {
+    if (userData.containsKey("user")) {
+      log.info("{}", userData.get("user"));
+    }
   }
 
   private static void orgJson(String string) {
@@ -153,7 +207,7 @@ public class App {
       jsonObject = new JSONObject(string);
     } catch (JSONException e) {
       e.printStackTrace();
-      log.warn(e.getMessage());
+      log.error(e.getMessage());
     }
     Iterator<?> keys = jsonObject.keys();
     while (keys.hasNext()) {
@@ -165,7 +219,7 @@ public class App {
         orgJson(jsonObject2.toString());
       } catch (JSONException e) {
         e.printStackTrace();
-        log.warn(e.getMessage());
+        log.error(e.getMessage());
       }
     }
   }
