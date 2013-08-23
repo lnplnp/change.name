@@ -1,0 +1,12 @@
+{
+	"user": {
+		"gender": "female",
+		"name": {
+			"first": "katie",
+			"last": "adams"
+		},
+		"email": "katieadams13@mail.me",
+		"picture": "http:\/\/randomuser.me\/g\/portraits\/women\/030.jpg",
+		"seed": "002091034011013030"
+	}
+}
