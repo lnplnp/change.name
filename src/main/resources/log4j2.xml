@@ -4,13 +4,13 @@
   <appenders>
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout
-        pattern="%d [%t] %-5level %logger - %location (%line) - %msg%n" />
+        pattern="%d [%t] %-5level - %location - %msg%n" />
     </Console>
 
     <RollingFile name="changenameRollingFile" fileName="logs/changename.log"
       filePattern="logs/$${date:yyyy-MM}/app-%d{yyyy-MM-dd-HH}-%i.changename.log">
       <PatternLayout>
-        <pattern>%d %p %c [%t] %m%n</pattern>
+        <pattern>%d %p %c [%t] - %location - %m%n</pattern>
       </PatternLayout>
       <Policies>
         <TimeBasedTriggeringPolicy interval="6"
@@ -22,10 +22,10 @@
   </appenders>
 
   <loggers>
-    <root level="debug">
+    <root level="ALL">
       <appender-ref ref="Console" />
     </root>
-    <logger name="changename" level="debug">
+    <logger name="fr" level="ALL">
       <appender-ref ref="changenameRollingFile" />
     </logger>
   </loggers>
