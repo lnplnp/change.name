@@ -1,0 +1,127 @@
+{
+	"results": [{
+		"user": {
+			"gender": "female",
+			"name": {
+				"title": "ms",
+				"first": "april",
+				"last": "hamilton"
+			},
+			"location": {
+				"street": "6472 daisy dr",
+				"city": "portland",
+				"state": "arkansas",
+				"zip": "62636"
+			},
+			"email": "april.hamilton79@example.com",
+			"password": "11112222",
+			"md5 hash": "821f3157e1a3456bfe1a000a1adf0862",
+			"sha1 hash": "114a42d736ced0dce1affc1e898c69b3998426df",
+			"phone": "(919)-353-4892",
+			"cell": "(299)-326-8665",
+			"SSN": "970-17-3204",
+			"picture": "http:\/\/randomuser.me\/g\/portraits\/women\/2.jpg"
+		},
+		"seed": "730be44035df154b"
+	},
+	{
+		"user": {
+			"gender": "male",
+			"name": {
+				"title": "mr",
+				"first": "larry",
+				"last": "campbell"
+			},
+			"location": {
+				"street": "2612 timber wolf trail",
+				"city": "lancaster",
+				"state": "minnesota",
+				"zip": "40989"
+			},
+			"email": "larry.campbell84@example.com",
+			"password": "everett",
+			"md5 hash": "d60bbb7684dffc8995dea0a56c8d0a37",
+			"sha1 hash": "ec5bf3d634d4f28c1cc3eab85621ac6893eb91dd",
+			"phone": "(722)-847-3202",
+			"cell": "(842)-911-9782",
+			"SSN": "980-32-4747",
+			"picture": "http:\/\/randomuser.me\/g\/portraits\/men\/30.jpg"
+		},
+		"seed": "52c5189391854c93"
+	},
+	{
+		"user": {
+			"gender": "female",
+			"name": {
+				"title": "mrs",
+				"first": "rose",
+				"last": "king"
+			},
+			"location": {
+				"street": "1643 nowlin rd",
+				"city": "detroit",
+				"state": "utah",
+				"zip": "74582"
+			},
+			"email": "rose.king66@example.com",
+			"password": "maserati",
+			"md5 hash": "c8e33a48e3b0fe1f27c5a2ca67c26161",
+			"sha1 hash": "a0f228b08f128e8cb1d2b48fb9e18761b06ef84c",
+			"phone": "(415)-538-9591",
+			"cell": "(960)-737-9546",
+			"SSN": "826-34-5749",
+			"picture": "http:\/\/randomuser.me\/g\/portraits\/women\/11.jpg"
+		},
+		"seed": "8065d07da4a77621"
+	},
+	{
+		"user": {
+			"gender": "male",
+			"name": {
+				"title": "mr",
+				"first": "arron",
+				"last": "harris"
+			},
+			"location": {
+				"street": "3885 lovers ln",
+				"city": "duncanville",
+				"state": "maine",
+				"zip": "66575"
+			},
+			"email": "arron.harris55@example.com",
+			"password": "1111111",
+			"md5 hash": "7fa8282ad93047a4d6fe6111c93b308a",
+			"sha1 hash": "2ea6201a068c5fa0eea5d81a3863321a87f8d533",
+			"phone": "(729)-334-4666",
+			"cell": "(848)-993-4518",
+			"SSN": "653-47-4072",
+			"picture": "http:\/\/randomuser.me\/g\/portraits\/men\/14.jpg"
+		},
+		"seed": "1896a3bf730516dd"
+	},
+	{
+		"user": {
+			"gender": "female",
+			"name": {
+				"title": "mrs",
+				"first": "andrea",
+				"last": "foster"
+			},
+			"location": {
+				"street": "5005 parker rd",
+				"city": "great falls",
+				"state": "oklahoma",
+				"zip": "36372"
+			},
+			"email": "andrea.foster62@example.com",
+			"password": "horses",
+			"md5 hash": "52b14869c15726dda86b87cb93666a74",
+			"sha1 hash": "0fa13e9c53b81b1c4fd304fffbfbb65a43e40dcf",
+			"phone": "(886)-463-3830",
+			"cell": "(739)-209-2310",
+			"SSN": "464-35-3780",
+			"picture": "http:\/\/randomuser.me\/g\/portraits\/women\/2.jpg"
+		},
+		"seed": "8d8818c8e140c64c"
+	}]
+}

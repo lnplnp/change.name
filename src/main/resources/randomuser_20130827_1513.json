@@ -1,0 +1,27 @@
+{
+	"results": [{
+		"user": {
+			"gender": "female",
+			"name": {
+				"title": "mrs",
+				"first": "nevaeh",
+				"last": "peterson"
+			},
+			"location": {
+				"street": "5912 karen dr",
+				"city": "grand prairie",
+				"state": "indiana",
+				"zip": "84972"
+			},
+			"email": "nevaeh.peterson69@example.com",
+			"password": "mary",
+			"md5 hash": "b8e7be5dfa2ce0714d21dcfc7d72382c",
+			"sha1 hash": "5665331b9b819ac358165f8c38970dc8c7ddb47d",
+			"phone": "(180)-955-1412",
+			"cell": "(926)-775-4699",
+			"SSN": "778-66-2572",
+			"picture": "http:\/\/randomuser.me\/g\/portraits\/women\/16.jpg"
+		},
+		"seed": "4acde725ee16eac3"
+	}]
+}
